@@ -24,7 +24,7 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./style": "./dist/style.css",
+    "./style": "./dist/xiana-ui.css",
     "./components/*": {
       "import": "./dist/components/*.mjs",
       "require": "./dist/components/*.js",
