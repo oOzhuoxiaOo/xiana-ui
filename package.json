@@ -1,7 +1,7 @@
 {
   "name": "xiana-ui",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "A modern Vue 3 UI component library built with Tailwind CSS",
   "keywords": ["vue", "vue3", "ui", "components", "tailwindcss", "typescript"],
