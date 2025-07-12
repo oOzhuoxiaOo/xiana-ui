@@ -1,33 +1,87 @@
 {
   "name": "xiana-ui",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
+  "description": "A modern Vue 3 UI component library built with Tailwind CSS",
+  "keywords": ["vue", "vue3", "ui", "components", "tailwindcss", "typescript"],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oOzhuoxiaOo/xiana-ui.git"
+  },
+  "homepage": "https://oOzhuoxiaOo.github.io/xiana-ui",
+  "bugs": {
+    "url": "https://github.com/oOzhuoxiaOo/xiana-ui/issues"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./style": "./dist/style.css",
+    "./components/*": {
+      "import": "./dist/components/*.mjs",
+      "require": "./dist/components/*.js",
+      "types": "./dist/components/*.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 8080",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "build:lib": "vite build --config vite.lib.config.ts",
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint src --ext .vue,.js,.ts,.jsx,.tsx",
+    "format": "prettier --write src"
   },
   "dependencies": {
+    "@tanstack/vue-table": "^8.21.3",
+    "@vueuse/core": "^13.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.525.0",
+    "prettier": "^3.6.2",
+    "prismjs": "^1.30.0",
     "reka-ui": "^2.3.2",
+    "sass": "^1.89.2",
+    "shiki": "^3.7.0",
     "tailwind-merge": "^3.3.1",
-    "tw-animate-css": "^1.3.5",
-    "vue": "^3.5.17"
+    "tailwindcss-animate": "^1.0.7",
+    "tw-animate-css": "^1.3.5"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.11",
     "@types/node": "^24.0.10",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.11",
+    "sass-embedded": "^1.89.2",
+    "tailwindcss": "^3.4.17",
     "typescript": "~5.8.3",
     "vite": "^7.0.0",
+    "vite-plugin-dts": "^4.5.4",
+    "vitepress": "^1.6.3",
+    "vitepress-demo-plugin": "^1.4.5",
+    "vue": "^3.5.17",
     "vue-tsc": "^2.2.10"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0",
+    "tailwindcss": "^3.4.0"
   },
   "packageManager": "pnpm@9.15.4"
 }

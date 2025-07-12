@@ -1,0 +1,6 @@
+@import "./tailwind.css";
+@import "./variables.css";
+
+body {
+  min-height: 100vh;
+}

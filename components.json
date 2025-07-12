@@ -5,9 +5,9 @@
   "tailwind": {
     "config": "tailwind.config.js",
     "css": "src/assets/tailwind.css",
-    "baseColor": "slate",
+    "baseColor": "stone",
     "cssVariables": true,
-    "prefix": ""
+    "prefix": "tw-"
   },
   "aliases": {
     "components": "@/components",

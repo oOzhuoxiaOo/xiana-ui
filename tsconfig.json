@@ -4,9 +4,15 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@docs/*": ["./docs/*"]
     }
   },
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.json"],
+  "include": ["env.d.ts", 
+  "src/**/*", "src/**/*.vue", "src/**/*.json", 
+  "docs/**/*.ts", "docs/**/*.vue", "docs/**/*.md"],
+   "vueCompilerOptions": {
+    "vitePressExtensions": [".md"],
+  },
   "exclude": ["src/**/__tests__/*"]
 }
