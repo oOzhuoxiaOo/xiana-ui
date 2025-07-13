@@ -1,66 +1,80 @@
-name: 部署xiana-ui 到 github page 上
+name: 部署xiana-ui 到 github page 上  # 工作流名称
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]              # 监听 main 分支的 push 事件
   pull_request:
-    branches: [ main ]
+    branches: [ main ]              # 监听 main 分支的 PR 事件
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read                    # 只读仓库内容权限
+  pages: write                      # 允许写入 GitHub Pages
+  id-token: write                   # 允许生成 OIDC token（用于身份验证）
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: "pages"                    # 并发组名，防止多次部署冲突
+  cancel-in-progress: false         # 不取消正在进行的部署
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build:                            # 第一个 Job：构建文档
+    runs-on: ubuntu-latest          # 运行环境：最新版 Ubuntu
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4   # 第一步：拉取代码
         with:
-          fetch-depth: 0
+          fetch-depth: 0            # 拉取所有提交历史（对生成文档有帮助）
+
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4 # 安装 Node.js 环境
         with:
-          node-version: 18
+          node-version: 18          # 指定 Node 版本为 18
+
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v2  # 安装 pnpm 包管理器
         with:
-          version: 9
+          version: 9                # 指定 pnpm 版本为 9
+
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        # 获取 pnpm 的缓存目录，并写入到环境变量
+
       - name: Setup pnpm cache
         uses: actions/cache@v3
         with:
-          path: ${{ env.STORE_PATH }}
+          path: ${{ env.STORE_PATH }}  # 缓存 pnpm 依赖，加速后续安装
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        # 配置 GitHub Pages 环境（必须步骤）
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        # 安装依赖，确保 lockfile 一致
+
       - name: Build with VitePress
         run: pnpm docs:build
+        # 构建文档（VitePress），输出到 docs/.vitepress/dist
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
+        # 上传构建产物，供后续部署 Job 使用
 
-  deploy:
+  deploy:                           # 第二个 Job：部署到 GitHub Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'
+    needs: build                    # 依赖 build Job 完成
+    if: github.ref == 'refs/heads/main'  # 只在 main 分支执行
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4 
+        # 部署到 GitHub Pages，自动发布到 pages 环境 

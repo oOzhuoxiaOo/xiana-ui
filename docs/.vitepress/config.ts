@@ -1,5 +1,6 @@
 import path from 'path'
 import { defineConfig } from 'vitepress'
+import svgVueLoader from '../../plugins/vite-plugin-svg-vue'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -17,7 +18,7 @@ export default defineConfig({
         text: 'Components',
         items: [
           { text: 'Button', link: '/module/components/button/button.md' },
-          // { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'AlertDialog', link: '/module/components/alert-dialog/alert-dialog.md' }
         ]
       }
     ],
@@ -27,7 +28,9 @@ export default defineConfig({
     ]
   },
   vite: {
-
+    plugins: [
+      svgVueLoader() as any
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '../../src'),
@@ -35,5 +38,6 @@ export default defineConfig({
       },
     },
   },
+
   base: '/xiana-ui/'
 })
