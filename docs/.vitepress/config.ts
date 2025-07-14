@@ -1,7 +1,6 @@
 import path from 'path'
 import { defineConfig } from 'vitepress'
 import svgVueLoader from '../../plugins/vite-plugin-svg-vue'
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "XIANA-UI",
@@ -18,7 +17,8 @@ export default defineConfig({
         text: 'Components',
         items: [
           { text: 'Button', link: '/module/components/button/button.md' },
-          { text: 'AlertDialog', link: '/module/components/alert-dialog/alert-dialog.md' }
+          { text: 'AlertDialog', link: '/module/components/alert-dialog/alert-dialog.md' },
+          { text: 'Card', link: '/module/components/card/card.md' }
         ]
       }
     ],
@@ -29,7 +29,8 @@ export default defineConfig({
   },
   vite: {
     plugins: [
-      svgVueLoader() as any
+      svgVueLoader() as any,
+
     ],
     resolve: {
       alias: {
@@ -37,6 +38,16 @@ export default defineConfig({
         '@docs': path.resolve(__dirname, '../../docs'),
       },
     },
+  },
+
+  vue: {
+    // denylist 中的标签将不会被当作 Vue 组件解析
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => tag === 'iconify-icon'
+      }
+    }
+
   },
 
   base: '/xiana-ui/'
